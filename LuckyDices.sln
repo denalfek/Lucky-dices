@@ -12,8 +12,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LuckyDices.Web", "LuckyDice
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LuckyDices.Tests", "LuckyDices.Tests\LuckyDices.Tests.csproj", "{A9664259-1462-427D-91B7-210A7A72C35E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LuckyDices.Documentation", "LuckyDices.Documentation", "{E6D522EF-487F-46EF-A26E-5F99673AF32D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
