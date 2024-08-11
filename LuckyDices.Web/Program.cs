@@ -1,9 +1,17 @@
 using LuckyDices.Web;
 using LuckyDices.Web.Components;
+using LuckyDices.Web.Hubs;
+using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add service defaults & Aspire components.
+builder.Services.AddSignalR();
+builder.Services.AddResponseCompression(opts =>
+{
+    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+        ["application/octet-stream"]);
+});
 builder.AddServiceDefaults();
 builder.AddRedisOutputCache("cache");
 
@@ -20,6 +28,7 @@ builder.Services.AddHttpClient<WeatherApiClient>(client =>
 
 var app = builder.Build();
 
+app.UseResponseCompression();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
@@ -38,5 +47,11 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
 app.MapDefaultEndpoints();
-
+//app.MapHub<GameHub>(LuckyDices.Web.Statics.Uri.Game);
+app.UseRouting();
+app.UseAntiforgery();
+app.UseEndpoints(endpoints =>
+{
+    _ = endpoints.MapHub<GameHub>(LuckyDices.Web.Statics.Uri.Game);
+});
 app.Run();

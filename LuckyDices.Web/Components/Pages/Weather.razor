@@ -1,8 +1,9 @@
 ﻿@page "/weather"
 @attribute [StreamRendering(true)]
 @attribute [OutputCache(Duration = 5)]
-
+@using LuckyDices.Web.Hubs
 @inject WeatherApiClient WeatherApi
+
 
 <PageTitle>Weather</PageTitle>
 
@@ -40,10 +41,12 @@ else
 }
 
 @code {
+    private GameHub? hub;
     private WeatherForecast[]? forecasts;
 
     protected override async Task OnInitializedAsync()
     {
+        await hub.SendMessageAsync("test", "test message");
         forecasts = await WeatherApi.GetWeatherAsync();
     }
 }
